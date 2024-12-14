@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://bdnskq01ftttx"]
+[gd_scene load_steps=7 format=4 uid="uid://bdnskq01ftttx"]
 
 [ext_resource type="PackedScene" uid="uid://ccpf8pjpg4wqk" path="res://characters/player.tscn" id="1_447g5"]
 [ext_resource type="Texture2D" uid="uid://dmfnyxunl8gwd" path="res://2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="1_ry245"]
+[ext_resource type="Shader" path="res://shaders/老电视shader_梦核.gdshader" id="3_gt7gd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nahp2"]
 texture = ExtResource("1_ry245")
@@ -128,6 +129,9 @@ texture = ExtResource("1_ry245")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_nahp2")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2kth"]
+shader = ExtResource("3_gt7gd")
+
 [node name="simple_scean" type="Node2D"]
 
 [node name="地板" type="TileMapLayer" parent="."]
@@ -139,11 +143,11 @@ tile_map_data = PackedByteArray("AAD9//3/AAABAAAAAAD+//3/AAACAAAAAAD///3/AAADAAA
 tile_set = SubResource("TileSet_prq8r")
 
 [node name="物品" type="TileMapLayer" parent="."]
+material = SubResource("ShaderMaterial_c2kth")
 tile_map_data = PackedByteArray("AAD9//3/AAABAAAAAAD+//3/AAACAAAAAAD///3/AAADAAAAAAAAAP3/AAABAAAAAAABAP3/AAACAAAAAAACAP3/AAADAAAAAAADAP3/AAABAAAAAAAEAP3/AAACAAAAAAAFAP3/AAADAAAAAAAGAP3/AAABAAAAAAAHAP3/AAAFAAAAAAAHAP7/AAAFAAEAAAAHAP//AAAFAAIAAAAHAAAAAAAFAAMAAAAHAAEAAAAFAAAAAAAHAAIAAAAFAAEAAAAHAAMAAAAFAAIAAAAHAAQAAAAFAAQAAAD8//3/AAAAAAAAAAD8//7/AAAAAAEAAAD8////AAAAAAIAAAD8/wAAAAAAAAAAAAD8/wEAAAAAAAEAAAD8/wIAAAAAAAIAAAD8/wMAAAAAAAMAAAD8/wQAAAAAAAQAAAD9/wQAAAABAAQAAAD+/wQAAAACAAQAAAD//wQAAAADAAQAAAAAAAQAAAAEAAQAAAABAAQAAAACAAQAAAACAAQAAAADAAQAAAADAAQAAAAEAAQAAAAEAAQAAAACAAQAAAAFAAQAAAADAAQAAAAGAAQAAAAEAAQAAAADAAIAAAAEAAgAAAACAAIAAAAFAAgAAAABAAIAAAADAAgAAAD//wIAAAAEAAYAAAAEAAIAAAAGAAgAAAABAAEAAAAIAAkAAAACAAEAAAAHAAkAAAAEAAEAAAAJAAkAAAAEAAAAAAAIAAYAAAA=")
 tile_set = SubResource("TileSet_prq8r")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_447g5")]
-position = Vector2(-24, -24)
-speed = 100
+position = Vector2(-40, 56)
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]

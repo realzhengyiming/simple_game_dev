@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccpf8pjpg4wqk"]
+[gd_scene load_steps=6 format=3 uid="uid://ccpf8pjpg4wqk"]
 
 [ext_resource type="Script" path="res://characters/player_move.gd" id="1_8dybj"]
 [ext_resource type="Texture2D" uid="uid://bmfuqyo7yfc24" path="res://2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Character.png" id="2_33ab1"]
+[ext_resource type="Shader" path="res://shaders/老电视shader_梦核.gdshader" id="2_vao26"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kp120"]
 size = Vector2(14, 13)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fq4bw"]
+shader = ExtResource("2_vao26")
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_8dybj")
@@ -13,6 +17,7 @@ script = ExtResource("1_8dybj")
 shape = SubResource("RectangleShape2D_kp120")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fq4bw")
 texture = ExtResource("2_33ab1")
 hframes = 7
 vframes = 4
