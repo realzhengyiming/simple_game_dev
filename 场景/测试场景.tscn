@@ -1,27 +1,55 @@
 [gd_scene load_steps=4 format=3 uid="uid://dcgoll5g2o68w"]
 
-[ext_resource type="Shader" path="res://shaders/物品高光.gdshader" id="1_vx8ig"]
 [ext_resource type="Texture2D" uid="uid://bmfuqyo7yfc24" path="res://2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Character.png" id="2_haewk"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tjff7"]
-shader = ExtResource("1_vx8ig")
-shader_parameter/Line_Smoothness = 0.045
-shader_parameter/Line_Width = 0.09
-shader_parameter/Brightness = 3.0
-shader_parameter/Rotation_deg = 30.0
-shader_parameter/Distortion = 1.8
-shader_parameter/Speed = 0.7
-shader_parameter/Position = 0.0
-shader_parameter/Position_Min = 0.25
-shader_parameter/Position_Max = 0.5
-shader_parameter/Alpha = 1.0
+[sub_resource type="Shader" id="Shader_k788g"]
+code = "shader_type canvas_item;
+uniform vec2 dir = vec2(0,0);
+uniform int quality = 4;
+
+void vertex(){
+	vec2 blurSize = abs(dir) * 2.0;
+	VERTEX *= blurSize + 1.0;
+	UV = (UV - 0.5) * (blurSize + 1.0) + 0.5;
+}
+
+float insideUnitSquare(vec2 v) {
+    vec2 s = step(vec2(0.0), v) - step(vec2(1.0), v);
+    return s.x * s.y;   
+}
+
+void fragment(){
+	float inSquare = insideUnitSquare(UV);
+	float numSamples = inSquare;
+	COLOR = texture(TEXTURE, UV) * inSquare;
+	vec2 stepSize = dir/(float(quality));
+	vec2 uv;
+	for(int i = 1; i <= quality; i++){
+		uv = UV + stepSize * float(i);
+		inSquare = insideUnitSquare(uv);
+		numSamples += inSquare;
+		COLOR += texture(TEXTURE, uv) * inSquare;
+		
+		uv = UV - stepSize * float(i);
+		inSquare = insideUnitSquare(uv);
+		numSamples += inSquare;
+		COLOR += texture(TEXTURE, uv) * inSquare;
+	}
+	COLOR.rgb /= numSamples;
+	COLOR.a /= float(quality)*2.0 + 1.0;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lg1rb"]
+shader = SubResource("Shader_k788g")
+shader_parameter/dir = Vector2(0, 0)
+shader_parameter/quality = 4
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_tjff7")
+material = SubResource("ShaderMaterial_lg1rb")
 position = Vector2(16, 16)
 texture = ExtResource("2_haewk")
 hframes = 7
 vframes = 4
-frame = 25
+frame = 26

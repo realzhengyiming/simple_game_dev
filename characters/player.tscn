@@ -1,14 +1,90 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccpf8pjpg4wqk"]
+[gd_scene load_steps=7 format=3 uid="uid://ccpf8pjpg4wqk"]
 
 [ext_resource type="Script" path="res://characters/player_move.gd" id="1_8dybj"]
 [ext_resource type="Texture2D" uid="uid://bmfuqyo7yfc24" path="res://2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Character.png" id="2_33ab1"]
-[ext_resource type="Shader" path="res://shaders/老电视shader_梦核.gdshader" id="2_vao26"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kp120"]
 size = Vector2(14, 13)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fq4bw"]
-shader = ExtResource("2_vao26")
+[sub_resource type="Animation" id="Animation_vodrr"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_y6mbc"]
+resource_name = "walk"
+length = 0.6
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -33, -0.25, 0, 0.25, 0, 0.164061, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.0001, 0.0002, 0.048045, 0.148045, 0.3, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.048045, 0.148045, 0.3, 0.4)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, -3, -0.25, 0, 0.25, 0, -3, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.048045, 0.148045, 0.3, 0.4)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oob06"]
+_data = {
+"RESET": SubResource("Animation_vodrr"),
+"walk": SubResource("Animation_y6mbc")
+}
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_8dybj")
@@ -17,8 +93,12 @@ script = ExtResource("1_8dybj")
 shape = SubResource("RectangleShape2D_kp120")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_fq4bw")
 texture = ExtResource("2_33ab1")
 hframes = 7
 vframes = 4
-frame = 20
+frame = 23
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_oob06")
+}
