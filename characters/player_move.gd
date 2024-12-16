@@ -10,8 +10,15 @@ var is_moving = false
 var target_position  
 # 新增变量，用于记录当前正在移动的方向，初始化为空字符串，表示尚未开始移动或者移动已结束
 var current_moving_direction = ""  
+@onready var progress_bar: ProgressBar = $ProgressBar
+
+var total_health := 100
+var max_health := total_health
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+func _ready() -> void:
+	progress_bar.value = max_health
 
 func _physics_process(delta):
 	# 在每帧物理处理过程中执行以下逻辑
@@ -32,6 +39,10 @@ func _physics_process(delta):
 		current_moving_direction = ""  
 	
 		animation_player.play("walk")
+		
+		# 改变血条
+		progress_bar.value -=5
+		
 	else:
 		# 角色当前处于静止状态，开始处理方向键输入逻辑
 		# 检测向右方向键是否刚刚被按下，并且当前没有正在进行的移动操作（即current_moving_direction为空字符串）
